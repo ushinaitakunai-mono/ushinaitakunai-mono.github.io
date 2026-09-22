@@ -145,14 +145,46 @@
   .rname{font-weight:700;font-size:clamp(24px,6.4vw,30px);line-height:1.45;margin:0 0 10px;color:var(--accent)}
   .rcatch{font-size:15.5px;color:var(--dim);margin:0;line-height:1.8}
 
-  .axes{display:flex;flex-direction:column;gap:14px;background:var(--card);
-    border-radius:var(--r);padding:22px;box-shadow:var(--shadow);margin-bottom:30px}
-  .axis{display:grid;grid-template-columns:3.6em 1fr 3.6em;align-items:center;gap:10px;font-size:12.5px;font-weight:500}
-  .axis span{color:var(--faint)}
-  .axis span.hit{color:var(--accent);font-weight:700}
-  .axis span:last-child{text-align:right}
+  .axes{display:flex;flex-direction:column;gap:22px;background:var(--card);
+    border-radius:var(--r);padding:24px 22px;box-shadow:var(--shadow);margin-bottom:30px}
+  .axis .cap{font-size:12px;color:var(--faint);margin:0 0 7px;font-weight:500}
+  .axrow{display:grid;grid-template-columns:5.4em 1fr 5.4em;align-items:center;gap:10px}
+  .axrow .p{font-size:12.5px;line-height:1.45;color:var(--faint);font-weight:500}
+  .axrow .p b{display:block;font-size:16px;font-weight:700;line-height:1.3}
+  .axrow .p.hit{color:var(--accent)}
+  .axrow .p:last-child{text-align:right}
   .track{height:9px;background:var(--soft);border-radius:999px;position:relative}
   .fill{position:absolute;top:0;height:9px;background:var(--accent);border-radius:999px}
+  .axpct{font-size:11.5px;color:var(--faint);text-align:center;margin:6px 0 0;font-weight:500}
+
+  /* ── 追加セクション ── */
+  .tagrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 0}
+  .tag{background:var(--accent-soft);color:var(--accent);font-size:12.5px;font-weight:700;
+    padding:7px 13px;border-radius:999px}
+  .strs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+  .strs li{position:relative;padding-left:27px;font-size:14.5px;line-height:1.8}
+  .strs li::before{content:"";position:absolute;left:2px;top:.62em;width:11px;height:11px;
+    border-radius:50%;border:3px solid var(--accent)}
+  .mis{background:var(--soft);border-radius:15px;padding:15px 17px;font-size:14px;
+    line-height:1.9;margin:16px 0 0;color:var(--text)}
+  .mis b{color:var(--accent)}
+  .match{display:flex;flex-direction:column;gap:12px}
+  .mrow{display:grid;grid-template-columns:58px 1fr;gap:13px;align-items:start;
+    background:var(--soft);border-radius:15px;padding:14px 16px}
+  .mav{position:relative;width:58px}
+  .mav img{width:58px;height:58px;border-radius:50%;object-fit:cover;display:block;background:var(--card)}
+  .mk{position:absolute;right:-5px;bottom:-4px;width:24px;height:24px;border-radius:50%;
+    background:var(--card);box-shadow:0 1px 4px rgba(0,0,0,.18);
+    font-size:14px;font-weight:700;line-height:24px;text-align:center}
+  .mk.g{color:#2E9C7C} .mk.b{color:#E05C7A}
+  .mn{font-weight:700;font-size:14.5px;margin:0 0 5px;line-height:1.5}
+  .mnn{display:block;font-size:12.5px;font-weight:500;color:var(--faint)}
+  .mw{margin:0;font-size:13.5px;line-height:1.85;color:var(--dim)}
+  .wants{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+  .wants li{background:var(--accent-soft);border-radius:16px 16px 16px 5px;padding:14px 17px;
+    font-size:15px;line-height:1.7;color:var(--text);font-weight:500}
+  .endp{margin:0;font-size:14.5px;line-height:1.95}
+  .secbody{margin:0;font-size:14.5px;line-height:1.95;white-space:pre-line}
 
   section{margin-bottom:26px;background:var(--card);border-radius:var(--r);
     padding:24px 22px;box-shadow:var(--shadow)}
@@ -255,6 +287,7 @@
 
 </div>
 
+<script src="types.js"></script>
 <script>
 /* 軸  A:近づく/待つ  B:考える/感じる  C:抱える/手放す  D:合わせる/守る */
 var Q = [
@@ -310,93 +343,11 @@ var Q = [
      ["ひとりの時間を、そっとしておいてくれるとき",{D:-2,A:-1}]]}
 ];
 
-/* [名前, キャッチ, 画像, 動物, alt, 主色, 淡色(明), 淡色(暗)] */
-var TYPES = {
- "近考抱合":["先回りして埋める人","尽くして、確かめて、また尽くす。","a01.jpg","ゴールデンレトリバー","荷物をたくさん抱えたいぬ","#E8A317","#FDF0D5","#4A3A14"],
- "近考抱守":["答えを探し続ける人","理由がわかるまで、終われない。","a02.jpg","フクロウ","虫めがねを覗きこむふくろう","#8B72C4","#EFE9FA","#362C55"],
- "近考放合":["整理してから渡す人","わかってしまえば、前に進める。","a03.jpg","うさぎ","リボンの箱を差し出すうさぎ","#6BA88A","#E7F4EC","#22382C"],
- "近考放守":["線を引いて近づく人","近づくけれど、飲み込まれない。","a04.jpg","ねこ","線を引きながら手を振るねこ","#4A9BA8","#E2F2F5","#1B3A40"],
- "近感抱合":["全部あげてしまう人","好きになるほど、自分が減っていく。","a05.jpg","ひつじ","花束の後ろに隠れるひつじ","#E77F94","#FCE7EB","#472730"],
- "近感抱守":["熱を抱えたまま待てない人","伝えてから、後悔する。","a06.jpg","りす","ハートを抱えて走るりす","#DD6B3C","#FBE8DF","#472518"],
- "近感放合":["その時を生きる人","終わった恋を、きれいに置いていける。","a07.jpg","かわうそ","風船を持ってスキップするかわうそ","#E8973F","#FCEEDC","#46301A"],
- "近感放守":["まっすぐ渡して手を離す人","好きと言えて、引き際も知っている。","a08.jpg","ことり","小鳥を空へ逃がすとり","#5AA8DC","#E4F1FB","#1D3448"],
- "待考抱合":["察して動けなくなる人","気づいているのに、言えない。","a09.jpg","ハムスター","口をおさえるハムスター","#C98499","#F8EAEF","#412A33"],
- "待考抱守":["ひとりで結論を出す人","誰にも聞かずに、抱えて終わる。","a10.jpg","ハリネズミ","毛布にくるまるハリネズミ","#8E6BA6","#F0E8F6","#33253C"],
- "待考放合":["静かに合わせて、静かに離れる人","波風を立てずに、終わらせる。","a11.jpg","あざらし","一歩下がって笑うあざらし","#5FBFA0","#E3F6EF","#1C3C33"],
- "待考放守":["距離で自分を守る人","近づきすぎる前に、引く。","a12.jpg","かめ","甲羅から顔を出すかめ","#6F9B5E","#EAF3E4","#26331F"],
- "待感抱合":["言えないまま数える人","返事を待つ夜が、いちばん長い。","a13.jpg","こぐま","大きなスマホを抱えるこぐま","#A5764F","#F5EADF","#3B2A1B"],
- "待感抱守":["心の中だけで愛する人","誰にも見せずに、ずっと持っている。","a14.jpg","こじか","小さなハートを胸に包むこじか","#C79A6B","#F8EEE1","#3E3022"],
- "待感放合":["流れにまかせる人","来た人を受けとめ、去る人を見送る。","a15.jpg","ペンギン","紙の舟で流れていくペンギン","#4F7DA8","#E3EEF8","#1C2E42"],
- "待感放守":["静かに終わらせる人","何も言わずに、そっと閉じる。","a16.jpg","きつね","扉を閉めて手を振るきつね","#7A8FA6","#EBF0F5","#2A333D"]
-};
-
-var SCENE = {
- "近":["既読がついた瞬間から、返信が来るまでの時間を数えている。","送ったあとで文面を読み返して、重かったかなと考えている。"],
- "待":["言いたいことを結局言わないまま、会話が終わっている。","誘われるのを待っているうちに、相手は誰かと出かけている。"],
- "考":["「あのときああ言っていれば」と、同じ場面を何度も再生している。","相手の一言の意味を、辞書を引くみたいに何度も調べている。"],
- "感":["怒っていないのに、言葉より先に涙が出てしまう。","相手の声のトーンが少し違うだけで、その日一日が沈む。"],
- "抱":["消せない写真のフォルダを、夜中にひらいてしまう。","終わった関係なのに、まだ続きがある気がして待っている。"],
- "放":["切り替えられた自分に、あとから罪悪感が来る。","もう大丈夫なはずなのに、ふとした瞬間に胸が詰まる。"],
- "合":["断りたい誘いに、期限が来て結局うなずいている。","相手の機嫌が悪いと、まず自分に原因を探し始める。"],
- "守":["近づきすぎたと感じて、急に連絡を減らしてしまう。","大事にされたいのに、差し出された手をよけてしまう。"]
-};
-var LOOP = {
- "抱合":["相手の反応が、少し冷たくなる","自分に原因があったのかを探す","関係を戻そうとして、合わせる・助ける・先回りする","一時的に安心する","また反応が気になって、自分のことを後回しにする"],
- "抱守":["相手の反応が、少し冷たくなる","理由を自分の中だけで考え続ける","聞けばわかることを、聞かずに推測で埋める","答えが出ないまま、距離だけ広がる","確かめられなかったことが、ずっと残る"],
- "放合":["しんどくなる前に、自分から合わせて丸くおさめる","その場は収まるが、本音は置き去りになる","置き去りにしたことに、あとから気づく","「もういいか」と切り替える","切り替えた自分を、少しだけ責める"],
- "放守":["近づきすぎたと感じる","自分を守るために、距離を取る","相手が離れていく","離れたことに納得しようとする","本当は近づきたかったことに、あとで気づく"]
-};
-var FIT = {
- "近":["急かさずに受けとめてくれる人","こちらの熱量を、重いと言わない人"],
- "待":["察してほしさを、言葉にしてくれる人","こちらが動くのを待たずに来てくれる人"],
- "考":["考えている時間を、そのまま待ってくれる人","結論を急がせない人"],
- "感":["感情を否定せずに、まず受けとる人","「泣くほどのこと？」と言わない人"],
- "抱":["過去ごと引き受けてくれる人","早く忘れろと言わない人"],
- "放":["切り替えの速さを、冷たいと言わない人","過去を掘り返さない人"],
- "合":["こちらの「いいよ」を疑って、本音を聞いてくれる人","断られても機嫌を変えない人"],
- "守":["距離を詰めすぎない人","黙っている時間を、心配しすぎない人"]
-};
-var HARD = {
- "近":["返事のペースが読めず、気まぐれな人","こちらの連絡を「重い」と言う人"],
- "待":["察してくれない人。言わないと伝わらない人","こちらが動くまで動かない人"],
- "考":["すぐ結論を求める人","考えていることを「めんどくさい」と言う人"],
- "感":["感情より正しさを先に置く人","涙を議論の敗北として扱う人"],
- "抱":["過去の話を嫌がる人","「もう終わったこと」で片づける人"],
- "放":["こちらの切り替えを薄情だと責める人","終わった話を何度も戻す人"],
- "合":["機嫌で人を動かす人","こちらの譲歩を当然として扱う人"],
- "守":["距離をいっきに詰めてくる人","ひとりの時間を寂しさとして扱う人"]
-};
-var STEP = {
- "近":"送る前に「明日の朝もう一度読む」と決めて、下書きに置く。",
- "待":"言えなかった一言を、送らなくていいのでメモに書き出す。",
- "考":"同じ場面を何回再生したか、正の字で数えてみる。",
- "感":"いまの気持ちに名前をつける。さみしい・こわい・くやしい、ひとつだけ。",
- "抱":"消せないものを、消さずに「あとで」という名前の場所に移す。",
- "放":"切り替えた自分を責めそうになったら、そこまでにかかった日数を書く。",
- "合":"次に断るものを1つ決めて、断る文章だけ先に作っておく。",
- "守":"今日よけてしまった言葉を、ひとつだけ書き留める。送らなくていい。"
-};
-var TONIGHT = {
- "抱":"スマホのメモに、いま頭に残っていることを3行だけ書く。書いたらスマホを伏せて、15分だけ別の部屋に置く。",
- "放":"今日ちゃんと切り替えられたことを、ひとつだけ書き出す。小さくていい。",
- "合":"明日ひとつだけ断ると決めて、その断り文だけを今のうちに作っておく。送るのは明日でいい。",
- "守":"今日、言おうとしてやめた言葉を、ひとつだけメモに残す。誰にも送らなくていい。"
-};
-
-/* 型ごとの「消耗の出かた」。
-   ⚠️ 型が肌を決める、とは書かない（根拠がない）。
-   診断で確認した行動（眠れない／気を遣う）から地続きに書く。
-   ⚠️ 薬機法。効果は断定しない。 */
-var DRAIN = {
- "抱":["眠りが浅くなりやすい",
-      "考えごとが止まらない夜が続くと、寝つく時間がどんどん後ろにずれていきます。睡眠が削られた翌朝は、顔が疲れて見えることがあります。"],
- "放":["気づかないうちに削れている",
-      "切り替えが早いぶん、疲れていること自体に気づくのが遅れがちです。気づいたときには、朝の鏡でだけ分かる、ということがあります。"],
- "合":["人といた日ほど、あとで来る",
-      "人に合わせている間は平気でも、帰ってから一気に来ます。気を張る日が続くと、生活のリズムごと乱れやすくなります。"],
- "守":["ひとりで戻すのに時間がかかる",
-      "距離を取って回復する型なので、その時間が取れない時期は、疲れが抜けないまま積み上がっていきます。"]
-};
+/* タイプ別データは types.js に分離した（2026-09-22 全面書き換え）。
+   旧版はここに TYPES/SCENE/LOOP/FIT/HARD/STEP/TONIGHT/DRAIN を置き、
+   軸ごとの部品を組み合わせて16通りに見せていたが、
+   1文字違いのタイプ同士で本文の7〜8割が同じ文になっていたため廃止。
+   設計根拠: リサーチ/診断結果ページ分解_20260922.md */
 
 /* A8 直リンク（2026-09-22 lit.link経由を廃止）
    ⚠️ A8規約: 登録していないサイトへの広告掲載は禁止。成果が全否認され、提携解除の対象になる。
@@ -451,8 +402,7 @@ function show(){
   el("quiz").hidden=true;
   var a=pole(S.A,"近","待"), b=pole(S.B,"考","感"),
       c=pole(S.C,"抱","放"), d=pole(S.D,"合","守");
-  var code=a+b+c+d, t=TYPES[code], g=c+d;
-  var loop=LOOP[g]||LOOP["抱合"];
+  var code=a+b+c+d, t=T[code];
 
   var dark=false;
   try{
@@ -460,48 +410,80 @@ function show(){
     dark = th==="dark" || (th!=="light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
   }catch(e){}
   var root=document.documentElement;
-  root.style.setProperty("--accent", t[5]);
-  root.style.setProperty("--accent-soft", dark?t[7]:t[6]);
+  root.style.setProperty("--accent", t.col[0]);
+  root.style.setProperty("--accent-soft", dark?t.col[2]:t.col[1]);
 
   var order=[[Math.abs(S.A),a],[Math.abs(S.B),b],[Math.abs(S.C),c],[Math.abs(S.D),d]]
             .sort(function(x,y){return y[0]-x[0]});
-  var scenes=[SCENE[order[0][1]][0],SCENE[order[1][1]][0],SCENE[order[2][1]][1]];
-  var steps=[STEP[order[0][1]],STEP[order[1][1]],STEP[order[2][1]]];
+  var scenes=t.sc;
 
-  function axrow(lo,hi,val,pick){
-    var pct=Math.max(8,Math.min(92,50+(val/14)*50));
-    return '<div class="axis"><span class="'+(pick===lo?"hit":"")+'">'+lo+'</span>'+
-      '<div class="track"><div class="fill" style="left:'+(pct<50?pct:50)+'%;width:'+Math.abs(pct-50)+'%"></div></div>'+
-      '<span class="'+(pick===hi?"hit":"")+'">'+hi+'</span></div>';
+  /* 軸の表示。文字だけでは分からないので、日本語名と「何を測っているか」を出す。
+     どちら寄りかを％でも見せる（16Personalities方式）。 */
+  function axrow(ax,val,picked){
+    var lean = Math.min(100, Math.round(50 + (val/14)*50));
+    var hiSide = val>=0;
+    var pct = hiSide ? lean : 100-lean;
+    var side = hiSide ? ax.hi : ax.lo;
+    var fillL = hiSide ? 50 : Math.max(4,lean);
+    var fillW = Math.abs(lean-50);
+    return '<div class="axis">'+
+      '<p class="cap">'+ax.label+'</p>'+
+      '<div class="axrow">'+
+        '<span class="p'+(picked===ax.lo[0]?" hit":"")+'"><b>'+ax.lo[0]+'</b>'+ax.lo[1]+'</span>'+
+        '<div class="track"><div class="fill" style="left:'+fillL+'%;width:'+fillW+'%"></div></div>'+
+        '<span class="p'+(picked===ax.hi[0]?" hit":"")+'"><b>'+ax.hi[0]+'</b>'+ax.hi[1]+'</span>'+
+      '</div>'+
+      '<p class="axpct">'+(Math.max(50,pct)<=52
+         ? "どちらも半分ずつ"
+         : side[1]+'寄り '+Math.max(50,pct)+'%')+'</p>'+
+    '</div>';
+  }
+  /* 動物名 → 画像・タイプ名。相性欄に相手のキャラを出すために引く。 */
+  var BY_ANIMAL={};
+  for(var k in T){ if(T.hasOwnProperty(k)) BY_ANIMAL[T[k].an]=T[k]; }
+  function mrow(m,good){
+    var o=BY_ANIMAL[m[0]], why=m[2];
+    /* 説明文の冒頭がタイプ名の繰り返しになるので落とす（名前は上に出ている） */
+    if(o && why.indexOf(o.n+"。")===0) why = why.slice(o.n.length+1);
+    m=[m[0],m[1],why];
+    return '<div class="mrow">'+
+      '<div class="mav">'+(o?'<img src="'+o.img+'" alt="'+m[0]+'" loading="lazy">':'')+
+        '<span class="mk '+(good?"g":"b")+'">'+m[1]+'</span></div>'+
+      '<div><p class="mn">'+m[0]+'タイプ'+(o?'<span class="mnn">'+o.n+'</span>':'')+'</p>'+
+      '<p class="mw">'+m[2]+'</p></div></div>';
   }
 
   var h=''+
    '<div class="rhead">'+
-     '<div class="rimg"><img src="'+t[2]+'" alt="'+t[4]+'" loading="eager"></div>'+
-     '<p class="animal">'+t[3]+'タイプ</p>'+
-     '<h1 class="rname">'+t[0]+'</h1>'+
-     '<p class="rcatch">'+t[1]+'</p>'+
+     '<div class="rimg"><img src="'+t.img+'" alt="'+t.alt+'" loading="eager"></div>'+
+     '<p class="animal">'+t.an+'タイプ</p>'+
+     '<h1 class="rname">'+t.n+'</h1>'+
+     '<p class="rcatch">'+t.c+'</p>'+
+     '<div class="tagrow">'+t.tags.map(function(x){return '<span class="tag">'+x+'</span>'}).join("")+'</div>'+
    '</div>'+
    '<div class="axes">'+
-     axrow("待","近",S.A,a)+axrow("感","考",S.B,b)+
-     axrow("放","抱",S.C,c)+axrow("守","合",S.D,d)+
+     axrow(AXES[0],S.A,a)+axrow(AXES[1],S.B,b)+
+     axrow(AXES[2],S.C,c)+axrow(AXES[3],S.D,d)+
    '</div>'+
+   '<section><h2>'+t.an+'タイプのあなた</h2><p class="secbody">'+t.lead+'</p></section>'+
+   t.sec.map(function(s){
+     return '<section><h2>'+s[0]+'</h2><p class="secbody">'+s[1]+'</p></section>';
+   }).join("")+
+   '<section><h2>あなたの強み</h2><ul class="strs">'+
+     t.str.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul>'+
+     '<p class="mis">'+t.mis+'</p></section>'+
    '<section><h2>苦しくなりやすい瞬間</h2><ul class="scenes">'+
      scenes.map(function(s){return "<li>"+s+"</li>"}).join("")+'</ul></section>'+
-   '<section><h2>抜けにくくなる流れ</h2><ul class="loop">'+
-     loop.map(function(s){return "<li>"+s+"</li>"}).join("")+'</ul></section>'+
-   '<section><h2>合う相手 / しんどくなる相手</h2><div class="pair">'+
-     '<div class="pbox good"><h3>合いやすい</h3><p>'+
-       FIT[order[0][1]][0]+"<br>"+FIT[order[1][1]][0]+"<br>"+FIT[order[2][1]][1]+'</p></div>'+
-     '<div class="pbox hard"><h3>消耗しやすい</h3><p>'+
-       HARD[order[0][1]][0]+"<br>"+HARD[order[1][1]][0]+"<br>"+HARD[order[2][1]][1]+'</p></div>'+
-   '</div></section>'+
-   '<section><h2>距離の取り方</h2><ul class="steps">'+
-     steps.map(function(s){return "<li>"+s+"</li>"}).join("")+'</ul></section>'+
-   '<section class="tonight"><h2>今夜できること、ひとつだけ</h2><p>'+
-     (TONIGHT[c]||TONIGHT["抱"])+'</p></section>'+
-   '<section><h2>'+DRAIN[c][0]+'</h2>'+
-     '<p>'+DRAIN[c][1]+'</p>'+
+   '<section><h2>'+t.an+'と相性がいいタイプ</h2><div class="match">'+
+     t.fit.map(function(m){return mrow(m,true)}).join("")+'</div></section>'+
+   '<section><h2>消耗しやすいタイプ</h2><div class="match">'+
+     t.hard.map(function(m){return mrow(m,false)}).join("")+'</div></section>'+
+   '<section><h2>この関係が終わるとき</h2><p class="endp">'+t.end+'</p></section>'+
+   '<section><h2>あなたが本当は言われたい言葉</h2><ul class="wants">'+
+     t.want.map(function(x){return "<li>「"+x+"」</li>"}).join("")+'</ul></section>'+
+   '<section class="tonight"><h2>今夜できること、ひとつだけ</h2><p>'+t.night+'</p></section>'+
+   '<section><h2>'+t.drain[0]+'</h2>'+
+     '<p>'+t.drain[1]+'</p>'+
      '<p>心のほうは、上の「今夜できること」から。'+
      'そして<b>体のほうは、削られたぶんを戻す作業が別に要ります。</b></p>'+
    '</section>'+
@@ -535,7 +517,16 @@ function show(){
     r.hidden=true; el("quiz").hidden=false; render(); window.scrollTo({top:0});
   };
   el("copy").onclick=function(){
-    var txt="【こじらせ16タイプ診断】\n私は「"+t[3]+"タイプ」\n"+t[0]+"\n"+t[1]+"\n\n苦しくなりやすい瞬間\n・"+scenes.join("\n・");
+    /* 共有されることが目的の文面。タイプ名・タグ・相性を入れて、会話が始まる形にする。 */
+    var txt="【こじらせ16タイプ診断】\n"+
+      "私は "+t.an+"タイプ\n"+
+      "「"+t.n+"」\n"+
+      t.c+"\n\n"+
+      t.tags.join(" ")+"\n\n"+
+      "苦しくなりやすい瞬間\n・"+scenes.join("\n・")+"\n\n"+
+      "相性がいいのは "+t.fit.map(function(m){return m[0]}).join("・")+"タイプ\n"+
+      "消耗しやすいのは "+t.hard.map(function(m){return m[0]}).join("・")+"タイプ\n\n"+
+      "あなたは何タイプ？\n"+location.origin+location.pathname;
     var btn=el("copy");
     if(navigator.clipboard&&navigator.clipboard.writeText){
       navigator.clipboard.writeText(txt).then(function(){
