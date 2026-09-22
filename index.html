@@ -199,8 +199,14 @@
     color:#fff;text-decoration:none;font-weight:700;box-shadow:0 4px 0 rgba(0,0,0,.09);
   }
   .cta a:hover{filter:brightness(1.05)}
+  .cta a.sub{
+    background:transparent;color:var(--dim);box-shadow:none;border:1.5px solid var(--line);
+    font-weight:500;font-size:13.5px;padding:13px;margin-top:12px;
+  }
+  .cta a.sub:hover{background:var(--soft);filter:none}
   .cta p b{color:var(--text);font-weight:700}
   .ctanote{font-size:11.5px!important;color:var(--faint)!important;margin:14px 0 0!important;text-align:center!important;line-height:1.75}
+  .cta .sublead{font-size:12.5px!important;color:var(--faint)!important;margin:22px 0 0!important;text-align:center!important}
 
   .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
   .ghost{
@@ -234,6 +240,7 @@
     </div>
     <button class="start" id="go">診断をはじめる</button>
     <p class="note">選ぶだけです。文章を書く必要はありません。<br>途中で閉じても、同じ端末なら続きから再開できます。</p>
+    <p class="note" style="color:var(--faint)">※このページには広告（PR）が含まれます。</p>
   </div>
 
   <div id="quiz" class="quiz" hidden>
@@ -391,10 +398,12 @@ var DRAIN = {
       "距離を取って回復する型なので、その時間が取れない時期は、疲れが抜けないまま積み上がっていきます。"]
 };
 
-/* A8の直リンクは置かない。
-   規約上、A8に登録していないサイト／自分で管理していないドメインへの広告掲載は禁止。
-   このページは claude.ai ドメインのため、lit.link（登録済み）経由にする。 */
-var LINK = "https://lit.link/ushinaitakunai_mono";
+/* A8 直リンク（2026-09-22 lit.link経由を廃止）
+   ⚠️ A8規約: 登録していないサイトへの広告掲載は禁止。成果が全否認され、提携解除の対象になる。
+   このページのドメインを必ずA8にサイト登録してから公開すること。
+   登録状況は offers/診断ページ公開_20260922.md を参照。 */
+var A8_BEAUTY  = "https://px.a8.net/svt/ejp?a8mat=4BCGFJ+4BE5O2+1USQ+3HE3PU"; /* オルビスユー ドット 1,800円 EPC690 確定率98.75% */
+var A8_URANAI  = "https://px.a8.net/svt/ejp?a8mat=4B7WD2+C3TBLE+2PEO+C3YG1";  /* ココナラ電話占い 16,000円 EPC65 ※絶対ルール5（740クリックまで判定しない）のため残す */
 var S={A:0,B:0,C:0,D:0}, idx=0, hist=[];
 var el=function(id){return document.getElementById(id)};
 var KEY="kojirase_v2";
@@ -499,10 +508,12 @@ function show(){
      '<h2>疲れが顔に出はじめたら</h2>'+
      '<p>寝不足や気の張りが続いた時期は、肌の調子が落ちて見えることがあります。'+
      '心の整理と同時に、そちらも戻していくほうが早いです。<br><br>'+
-     'いきなり大きいものを買う必要はありません。<b>1,000〜2,000円くらいのトライアル</b>から試せるものを、'+
-     'プロフィールにまとめています。</p>'+
-     '<a href="'+LINK+'" target="_blank" rel="noopener">プロフィールを見る</a>'+
-     '<p class="ctanote">話を聴いてもらえる場所も、同じところにあります。</p>'+
+     'いきなり大きいものを買う必要はありません。'+
+     '<b>1,000〜2,000円くらいのトライアル</b>から試せます。</p>'+
+     '<a href="'+A8_BEAUTY+'" target="_blank" rel="noopener nofollow sponsored">トライアルを見てみる</a>'+
+     '<p class="ctanote">オルビスユー ドット（トライアルセット）の公式ページが開きます。</p>'+
+     '<p class="sublead">どうしても、今夜だれかに聴いてほしいときは</p>'+
+     '<a class="sub" href="'+A8_URANAI+'" target="_blank" rel="noopener nofollow sponsored">声で話を聴いてもらう</a>'+
    '</section>'+
    '<div class="tools">'+
      '<button class="ghost" id="copy" type="button">結果をコピー</button>'+
