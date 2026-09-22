@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="恋愛や人間関係で、いつも同じところで苦しくなる。その「同じところ」に名前をつける10問3分の診断。">
+<meta property="og:title" content="こじらせ16タイプ診断">
+<meta property="og:description" content="いつも同じところで苦しくなる理由に、名前をつけます。10問・3分・登録不要。">
+<meta property="og:type" content="website">
+<style>:root{color-scheme:light}html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>こじらせ16タイプ診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#FFF7F0;
+    --card:#FFFFFF;
+    --soft:#FFF0E6;
+    --line:#F2E2D5;
+    --text:#3B3340;
+    --dim:#7C7085;
+    --faint:#A99CB0;
+
+    /* 4グループの色 */
+    --g-hold-give:#FF8BA0;   /* 抱×合 コーラル */
+    --g-hold-keep:#A78BFA;   /* 抱×守 パープル */
+    --g-free-give:#4FCBA4;   /* 放×合 ミント   */
+    --g-free-keep:#5BB3F0;   /* 放×守 スカイ   */
+    --accent:var(--g-hold-give);
+    --accent-soft:#FFE6EB;
+
+    --r:22px;
+    --font:"Zen Maru Gothic","Hiragino Maru Gothic ProN",-apple-system,sans-serif;
+    --shadow:0 2px 0 rgba(59,51,64,.06), 0 10px 24px -14px rgba(59,51,64,.28);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#221C26;--card:#2E2632;--soft:#372D3C;--line:#443A49;
+      --text:#F6EFF3;--dim:#C3B4C8;--faint:#9A8CA0;--accent-soft:#4A2E3A;
+      --shadow:0 2px 0 rgba(0,0,0,.2), 0 10px 24px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#221C26;--card:#2E2632;--soft:#372D3C;--line:#443A49;
+    --text:#F6EFF3;--dim:#C3B4C8;--faint:#9A8CA0;--accent-soft:#4A2E3A;
+    --shadow:0 2px 0 rgba(0,0,0,.2), 0 10px 24px -14px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--font);font-size:16px;line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+    padding-inline:18px;padding-block:0;
+  }
+  .wrap{max-width:540px;margin:0 auto}
+  button{font-family:inherit;font-size:inherit;cursor:pointer}
+  .start:focus-visible,.opt:focus-visible,.ghost:focus-visible,.back:focus-visible{
+    outline:3px solid var(--g-free-keep);outline-offset:3px;
+  }
+
+  /* ── 導入 ── */
+  .intro{padding-block:34px 44px;text-align:center}
+  .hero{
+    width:min(240px,62vw);aspect-ratio:1/1;margin:0 auto 6px;
+    border-radius:50%;background:var(--soft);overflow:hidden;
+  }
+  .hero img{width:100%;height:100%;object-fit:cover;display:block}
+  .pill{
+    display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:12px;letter-spacing:.08em;
+    padding:6px 14px;border-radius:999px;margin-bottom:14px;
+  }
+  h1{
+    font-weight:700;font-size:clamp(27px,7.4vw,35px);line-height:1.5;
+    margin:0 0 18px;text-wrap:balance;
+  }
+  .lede{
+    font-size:15px;color:var(--dim);margin:0 auto 26px;
+    max-width:23em;text-align:left;
+  }
+  .lede b{color:var(--text);font-weight:700}
+  .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .chip{
+    background:var(--card);border:2px solid var(--line);border-radius:999px;
+    padding:7px 15px;font-size:13px;color:var(--dim);font-weight:500;
+    font-variant-numeric:tabular-nums;
+  }
+  .chip b{color:var(--text);font-weight:700}
+  .start{
+    display:block;width:100%;padding:19px;border:0;border-radius:999px;
+    background:var(--accent);color:#fff;font-weight:700;font-size:17px;
+    box-shadow:0 4px 0 rgba(0,0,0,.09);transition:transform .12s,filter .18s;
+  }
+  .start:hover{filter:brightness(1.05)}
+  .start:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.09)}
+  .note{font-size:12.5px;color:var(--faint);margin-top:16px;line-height:1.8}
+
+  /* ── 設問 ── */
+  .quiz{padding-block:26px 50px}
+  .dots{display:flex;gap:6px;justify-content:center;margin-bottom:22px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--line);transition:background .3s,transform .3s}
+  .dot.on{background:var(--accent)}
+  .dot.now{background:var(--accent);transform:scale(1.55)}
+  .count{text-align:center;font-size:13px;color:var(--faint);margin:0 0 16px;font-weight:500}
+  .qcard{
+    background:var(--card);border-radius:var(--r);padding:26px 22px;
+    box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .q{font-weight:700;font-size:clamp(18px,4.9vw,21px);line-height:1.75;margin:0;text-wrap:balance}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{
+    width:100%;text-align:left;padding:16px 18px;
+    background:var(--card);color:var(--text);
+    border:2px solid var(--line);border-radius:18px;
+    line-height:1.7;font-size:15px;font-weight:500;
+    transition:border-color .16s,background .16s,transform .1s;
+  }
+  .opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .opt:active{transform:scale(.985)}
+  .back{
+    display:block;margin:20px auto 0;background:none;border:0;
+    color:var(--faint);font-size:13.5px;padding:8px 14px;font-weight:500;
+  }
+
+  /* ── 結果 ── */
+  .result{padding-block:30px 56px}
+  .rhead{
+    background:var(--card);border-radius:var(--r);padding:28px 22px 26px;
+    text-align:center;box-shadow:var(--shadow);margin-bottom:26px;
+    border-top:7px solid var(--accent);
+  }
+  .rimg{
+    width:min(230px,58vw);aspect-ratio:1/1;margin:0 auto 14px;
+    border-radius:50%;overflow:hidden;background:var(--soft);
+  }
+  .rimg img{width:100%;height:100%;object-fit:cover;display:block}
+  .animal{
+    display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:12.5px;letter-spacing:.06em;
+    padding:6px 15px;border-radius:999px;margin:0 0 12px;
+  }
+  .rname{font-weight:700;font-size:clamp(24px,6.4vw,30px);line-height:1.45;margin:0 0 10px;color:var(--accent)}
+  .rcatch{font-size:15.5px;color:var(--dim);margin:0;line-height:1.8}
+
+  .axes{display:flex;flex-direction:column;gap:14px;background:var(--card);
+    border-radius:var(--r);padding:22px;box-shadow:var(--shadow);margin-bottom:30px}
+  .axis{display:grid;grid-template-columns:3.6em 1fr 3.6em;align-items:center;gap:10px;font-size:12.5px;font-weight:500}
+  .axis span{color:var(--faint)}
+  .axis span.hit{color:var(--accent);font-weight:700}
+  .axis span:last-child{text-align:right}
+  .track{height:9px;background:var(--soft);border-radius:999px;position:relative}
+  .fill{position:absolute;top:0;height:9px;background:var(--accent);border-radius:999px}
+
+  section{margin-bottom:26px;background:var(--card);border-radius:var(--r);
+    padding:24px 22px;box-shadow:var(--shadow)}
+  h2{font-weight:700;font-size:17.5px;margin:0 0 16px;display:flex;align-items:center;gap:9px}
+  h2::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+  .scenes{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+  .scenes li{background:var(--soft);border-radius:15px;padding:14px 16px;font-size:14.5px;line-height:1.8;color:var(--text)}
+  .loop{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+  .loop li{background:var(--soft);border-radius:999px;padding:11px 18px;font-size:14px;color:var(--text);position:relative}
+  .loop li+li{margin-top:16px}
+  .loop li+li::before{
+    content:"";position:absolute;left:50%;top:-14px;width:2px;height:12px;
+    background:var(--line);border-radius:2px;
+  }
+  .pair{display:flex;flex-direction:column;gap:14px}
+  .pbox{border-radius:18px;padding:17px 18px}
+  .pbox.good{background:#E8F8F2}
+  .pbox.hard{background:#FFEFF2}
+  :root:not([data-theme="light"]) .pbox.good,:root[data-theme="dark"] .pbox.good{background:#243A34}
+  :root:not([data-theme="light"]) .pbox.hard,:root[data-theme="dark"] .pbox.hard{background:#3E2831}
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .pbox.good{background:#E8F8F2}
+    :root:not([data-theme="dark"]) .pbox.hard{background:#FFEFF2}}
+  .pbox h3{margin:0 0 9px;font-size:13.5px;font-weight:700}
+  .pbox.good h3{color:#2E9C7C}
+  .pbox.hard h3{color:#E05C7A}
+  .pbox p{margin:0;font-size:14px;color:var(--text);line-height:1.9}
+  .steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:13px}
+  .steps li{counter-increment:s;padding-left:38px;position:relative;font-size:14.5px;line-height:1.8}
+  .steps li::before{
+    content:counter(s);position:absolute;left:0;top:2px;
+    width:25px;height:25px;border-radius:50%;background:var(--accent);color:#fff;
+    font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  }
+  .tonight{background:var(--accent-soft);box-shadow:none;border:2px dashed var(--accent)}
+  .tonight h2{color:var(--accent)}
+  .tonight p{margin:0;font-size:15.5px;line-height:1.9}
+
+  .cta{background:var(--card);box-shadow:var(--shadow);text-align:center}
+  .cta .pr{font-size:11.5px;color:var(--faint);margin:0 0 10px;font-weight:500}
+  .cta h2{justify-content:center;font-size:18px}
+  .cta p{font-size:14.5px;color:var(--dim);margin:0 0 20px;text-align:left}
+  .cta a{
+    display:block;padding:17px;border-radius:999px;background:var(--accent);
+    color:#fff;text-decoration:none;font-weight:700;box-shadow:0 4px 0 rgba(0,0,0,.09);
+  }
+  .cta a:hover{filter:brightness(1.05)}
+  .cta p b{color:var(--text);font-weight:700}
+  .ctanote{font-size:11.5px!important;color:var(--faint)!important;margin:14px 0 0!important;text-align:center!important;line-height:1.75}
+
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .ghost{
+    flex:1;min-width:145px;padding:15px;border-radius:999px;
+    background:var(--card);border:2px solid var(--line);color:var(--dim);
+    font-size:14px;font-weight:700;
+  }
+  .ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .disc{font-size:11.5px;color:var(--faint);line-height:1.85;margin-top:26px;text-align:left}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div id="intro" class="intro">
+    <div class="hero"><img src="a17.jpg" alt="両手を振ってむかえてくれるねこ" loading="eager"></div>
+    <p class="pill">16タイプ・ぜんぶで10問</p>
+    <h1>こじらせ16タイプ診断</h1>
+    <p class="lede">
+      恋愛や人間関係で、<b>いつも同じところで苦しくなる</b>。<br>
+      その「同じところ」に、名前をつけます。<br><br>
+      性格を決めつけるためのものではありません。自分がはまりやすい流れを先に知っておくと、次に同じ夜が来たときに、少しだけ扱いやすくなります。
+    </p>
+    <div class="chips">
+      <span class="chip">設問 <b>10問</b></span>
+      <span class="chip">所要 <b>約3分</b></span>
+      <span class="chip">登録 <b>不要</b></span>
+    </div>
+    <button class="start" id="go">診断をはじめる</button>
+    <p class="note">選ぶだけです。文章を書く必要はありません。<br>途中で閉じても、同じ端末なら続きから再開できます。</p>
+  </div>
+
+  <div id="quiz" class="quiz" hidden>
+    <div class="dots" id="dots"></div>
+    <p class="count" id="count"></p>
+    <div class="qcard"><h2 class="q" id="qtext"></h2></div>
+    <div class="opts" id="opts"></div>
+    <button class="back" id="back" hidden>← ひとつ戻る</button>
+  </div>
+
+  <div id="result" class="result" hidden></div>
+
+</div>
+
+<script>
+/* 軸  A:近づく/待つ  B:考える/感じる  C:抱える/手放す  D:合わせる/守る */
+var Q = [
+ {t:"親しい相手から返信が来ない夜。頭に最初に浮かぶのは？",
+  o:[["何かあったのかなと、こちらから連絡してみる",{A:2}],
+     ["嫌われたのかもしれないと、会話を思い返す",{B:2,C:1}],
+     ["忙しいんだろうと思い、自分の時間に戻る",{A:-2,C:-1}],
+     ["こちらからは送らず、相手の出方を待つ",{A:-2,D:1}]]},
+ {t:"相手の機嫌が悪そうなとき、あなたはどうしますか？",
+  o:[["どうしたのかを聞いて、なんとかしようとする",{A:2,D:2}],
+     ["自分が何かしたのかを、まず考える",{B:2,D:2}],
+     ["落ち着くまで、そっとしておく",{A:-1,D:-2}],
+     ["気にしていないふりをするが、内心ずっと引きずる",{C:2,D:-1}]]},
+ {t:"本当は断りたい頼みごとをされました。",
+  o:[["その場で理由を言って断る",{D:-2,A:1}],
+     ["がっかりされたくなくて、引き受けてしまう",{D:2}],
+     ["返事を保留にして、期限が来たら結局引き受ける",{D:2,A:-1}],
+     ["断るけれど、そのあと罪悪感が残る",{D:-1,C:1,B:1}]]},
+ {t:"好きな人との距離を縮めたいとき。",
+  o:[["自分から誘って、好意も言葉にする",{A:2}],
+     ["反応を細かく見ながら、少しずつ近づく",{A:1,B:2}],
+     ["相手から来てくれるのを待つ",{A:-2}],
+     ["好きになるほど慎重になって、逆に引いてしまう",{A:-2,D:-2}]]},
+ {t:"誰かに傷つけられたあと、どう回復しますか？",
+  o:[["誰かに話を聞いてもらって、整理する",{A:2,D:1}],
+     ["やり取りを何度も思い返して、自分なりの答えを探す",{B:2,C:2}],
+     ["ひとりで距離を置いて、時間が経つのを待つ",{A:-1,D:-2}],
+     ["平気なふりをするが、長く心に残る",{C:2,D:-1}]]},
+ {t:"眠れない夜、頭の中にあるのは。",
+  o:[["今日の会話。嫌われていないかを確かめている",{B:1,C:2}],
+     ["言えなかった一言。言っていたらどうなっていたか",{B:2,C:2,A:-1}],
+     ["これからのこと。まだ終わっていない用事",{B:2,C:-2}],
+     ["特に何も。ただ、気持ちが落ち着かない",{B:-2}]]},
+ {t:"感情が動いたとき、あなたに起きやすいのは。",
+  o:[["まず言葉にして、相手に伝えようとする",{A:2,B:-1}],
+     ["声が震えたり、言葉より先に涙が出たりする",{B:-2}],
+     ["いったん持ち帰って、落ち着いてから考える",{B:2,A:-1}],
+     ["表情には出さないが、あとから一気に来る",{B:1,C:2,D:-1}]]},
+ {t:"終わった関係を、どう引きずりますか？",
+  o:[["連絡先や写真を消せないまま、置いてある",{C:2}],
+     ["「あのとき別の言い方をしていれば」と何度も戻る",{C:2,B:2}],
+     ["大切な経験として整理して、前に進む",{C:-2}],
+     ["考えないようにして、新しい予定で埋める",{C:-2,B:-1}]]},
+ {t:"自分の予定や体調を後回しにするのは、どんなとき？",
+  o:[["相手が困っているとき",{D:2,A:1}],
+     ["場がうまく進みそうなとき",{D:2,B:1}],
+     ["期待に応えたい、失望させたくないとき",{D:2,C:1}],
+     ["後回しにはしない。自分の線は引いている",{D:-2}]]},
+ {t:"「大事にされている」と感じるのは、どんな瞬間ですか？",
+  o:[["こまめに連絡をくれるとき",{A:1,C:1}],
+     ["言わなくても察してくれたとき",{A:-2,B:-1}],
+     ["こちらの考えを、否定せずに聞いてくれたとき",{B:2,D:-1}],
+     ["ひとりの時間を、そっとしておいてくれるとき",{D:-2,A:-1}]]}
+];
+
+/* [名前, キャッチ, 画像, 動物, alt, 主色, 淡色(明), 淡色(暗)] */
+var TYPES = {
+ "近考抱合":["先回りして埋める人","尽くして、確かめて、また尽くす。","a01.jpg","ゴールデンレトリバー","荷物をたくさん抱えたいぬ","#E8A317","#FDF0D5","#4A3A14"],
+ "近考抱守":["答えを探し続ける人","理由がわかるまで、終われない。","a02.jpg","フクロウ","虫めがねを覗きこむふくろう","#8B72C4","#EFE9FA","#362C55"],
+ "近考放合":["整理してから渡す人","わかってしまえば、前に進める。","a03.jpg","うさぎ","リボンの箱を差し出すうさぎ","#6BA88A","#E7F4EC","#22382C"],
+ "近考放守":["線を引いて近づく人","近づくけれど、飲み込まれない。","a04.jpg","ねこ","線を引きながら手を振るねこ","#4A9BA8","#E2F2F5","#1B3A40"],
+ "近感抱合":["全部あげてしまう人","好きになるほど、自分が減っていく。","a05.jpg","ひつじ","花束の後ろに隠れるひつじ","#E77F94","#FCE7EB","#472730"],
+ "近感抱守":["熱を抱えたまま待てない人","伝えてから、後悔する。","a06.jpg","りす","ハートを抱えて走るりす","#DD6B3C","#FBE8DF","#472518"],
+ "近感放合":["その時を生きる人","終わった恋を、きれいに置いていける。","a07.jpg","かわうそ","風船を持ってスキップするかわうそ","#E8973F","#FCEEDC","#46301A"],
+ "近感放守":["まっすぐ渡して手を離す人","好きと言えて、引き際も知っている。","a08.jpg","ことり","小鳥を空へ逃がすとり","#5AA8DC","#E4F1FB","#1D3448"],
+ "待考抱合":["察して動けなくなる人","気づいているのに、言えない。","a09.jpg","ハムスター","口をおさえるハムスター","#C98499","#F8EAEF","#412A33"],
+ "待考抱守":["ひとりで結論を出す人","誰にも聞かずに、抱えて終わる。","a10.jpg","ハリネズミ","毛布にくるまるハリネズミ","#8E6BA6","#F0E8F6","#33253C"],
+ "待考放合":["静かに合わせて、静かに離れる人","波風を立てずに、終わらせる。","a11.jpg","あざらし","一歩下がって笑うあざらし","#5FBFA0","#E3F6EF","#1C3C33"],
+ "待考放守":["距離で自分を守る人","近づきすぎる前に、引く。","a12.jpg","かめ","甲羅から顔を出すかめ","#6F9B5E","#EAF3E4","#26331F"],
+ "待感抱合":["言えないまま数える人","返事を待つ夜が、いちばん長い。","a13.jpg","こぐま","大きなスマホを抱えるこぐま","#A5764F","#F5EADF","#3B2A1B"],
+ "待感抱守":["心の中だけで愛する人","誰にも見せずに、ずっと持っている。","a14.jpg","こじか","小さなハートを胸に包むこじか","#C79A6B","#F8EEE1","#3E3022"],
+ "待感放合":["流れにまかせる人","来た人を受けとめ、去る人を見送る。","a15.jpg","ペンギン","紙の舟で流れていくペンギン","#4F7DA8","#E3EEF8","#1C2E42"],
+ "待感放守":["静かに終わらせる人","何も言わずに、そっと閉じる。","a16.jpg","きつね","扉を閉めて手を振るきつね","#7A8FA6","#EBF0F5","#2A333D"]
+};
+
+var SCENE = {
+ "近":["既読がついた瞬間から、返信が来るまでの時間を数えている。","送ったあとで文面を読み返して、重かったかなと考えている。"],
+ "待":["言いたいことを結局言わないまま、会話が終わっている。","誘われるのを待っているうちに、相手は誰かと出かけている。"],
+ "考":["「あのときああ言っていれば」と、同じ場面を何度も再生している。","相手の一言の意味を、辞書を引くみたいに何度も調べている。"],
+ "感":["怒っていないのに、言葉より先に涙が出てしまう。","相手の声のトーンが少し違うだけで、その日一日が沈む。"],
+ "抱":["消せない写真のフォルダを、夜中にひらいてしまう。","終わった関係なのに、まだ続きがある気がして待っている。"],
+ "放":["切り替えられた自分に、あとから罪悪感が来る。","もう大丈夫なはずなのに、ふとした瞬間に胸が詰まる。"],
+ "合":["断りたい誘いに、期限が来て結局うなずいている。","相手の機嫌が悪いと、まず自分に原因を探し始める。"],
+ "守":["近づきすぎたと感じて、急に連絡を減らしてしまう。","大事にされたいのに、差し出された手をよけてしまう。"]
+};
+var LOOP = {
+ "抱合":["相手の反応が、少し冷たくなる","自分に原因があったのかを探す","関係を戻そうとして、合わせる・助ける・先回りする","一時的に安心する","また反応が気になって、自分のことを後回しにする"],
+ "抱守":["相手の反応が、少し冷たくなる","理由を自分の中だけで考え続ける","聞けばわかることを、聞かずに推測で埋める","答えが出ないまま、距離だけ広がる","確かめられなかったことが、ずっと残る"],
+ "放合":["しんどくなる前に、自分から合わせて丸くおさめる","その場は収まるが、本音は置き去りになる","置き去りにしたことに、あとから気づく","「もういいか」と切り替える","切り替えた自分を、少しだけ責める"],
+ "放守":["近づきすぎたと感じる","自分を守るために、距離を取る","相手が離れていく","離れたことに納得しようとする","本当は近づきたかったことに、あとで気づく"]
+};
+var FIT = {
+ "近":["急かさずに受けとめてくれる人","こちらの熱量を、重いと言わない人"],
+ "待":["察してほしさを、言葉にしてくれる人","こちらが動くのを待たずに来てくれる人"],
+ "考":["考えている時間を、そのまま待ってくれる人","結論を急がせない人"],
+ "感":["感情を否定せずに、まず受けとる人","「泣くほどのこと？」と言わない人"],
+ "抱":["過去ごと引き受けてくれる人","早く忘れろと言わない人"],
+ "放":["切り替えの速さを、冷たいと言わない人","過去を掘り返さない人"],
+ "合":["こちらの「いいよ」を疑って、本音を聞いてくれる人","断られても機嫌を変えない人"],
+ "守":["距離を詰めすぎない人","黙っている時間を、心配しすぎない人"]
+};
+var HARD = {
+ "近":["返事のペースが読めず、気まぐれな人","こちらの連絡を「重い」と言う人"],
+ "待":["察してくれない人。言わないと伝わらない人","こちらが動くまで動かない人"],
+ "考":["すぐ結論を求める人","考えていることを「めんどくさい」と言う人"],
+ "感":["感情より正しさを先に置く人","涙を議論の敗北として扱う人"],
+ "抱":["過去の話を嫌がる人","「もう終わったこと」で片づける人"],
+ "放":["こちらの切り替えを薄情だと責める人","終わった話を何度も戻す人"],
+ "合":["機嫌で人を動かす人","こちらの譲歩を当然として扱う人"],
+ "守":["距離をいっきに詰めてくる人","ひとりの時間を寂しさとして扱う人"]
+};
+var STEP = {
+ "近":"送る前に「明日の朝もう一度読む」と決めて、下書きに置く。",
+ "待":"言えなかった一言を、送らなくていいのでメモに書き出す。",
+ "考":"同じ場面を何回再生したか、正の字で数えてみる。",
+ "感":"いまの気持ちに名前をつける。さみしい・こわい・くやしい、ひとつだけ。",
+ "抱":"消せないものを、消さずに「あとで」という名前の場所に移す。",
+ "放":"切り替えた自分を責めそうになったら、そこまでにかかった日数を書く。",
+ "合":"次に断るものを1つ決めて、断る文章だけ先に作っておく。",
+ "守":"今日よけてしまった言葉を、ひとつだけ書き留める。送らなくていい。"
+};
+var TONIGHT = {
+ "抱":"スマホのメモに、いま頭に残っていることを3行だけ書く。書いたらスマホを伏せて、15分だけ別の部屋に置く。",
+ "放":"今日ちゃんと切り替えられたことを、ひとつだけ書き出す。小さくていい。",
+ "合":"明日ひとつだけ断ると決めて、その断り文だけを今のうちに作っておく。送るのは明日でいい。",
+ "守":"今日、言おうとしてやめた言葉を、ひとつだけメモに残す。誰にも送らなくていい。"
+};
+
+/* 型ごとの「消耗の出かた」。
+   ⚠️ 型が肌を決める、とは書かない（根拠がない）。
+   診断で確認した行動（眠れない／気を遣う）から地続きに書く。
+   ⚠️ 薬機法。効果は断定しない。 */
+var DRAIN = {
+ "抱":["眠りが浅くなりやすい",
+      "考えごとが止まらない夜が続くと、寝つく時間がどんどん後ろにずれていきます。睡眠が削られた翌朝は、顔が疲れて見えることがあります。"],
+ "放":["気づかないうちに削れている",
+      "切り替えが早いぶん、疲れていること自体に気づくのが遅れがちです。気づいたときには、朝の鏡でだけ分かる、ということがあります。"],
+ "合":["人といた日ほど、あとで来る",
+      "人に合わせている間は平気でも、帰ってから一気に来ます。気を張る日が続くと、生活のリズムごと乱れやすくなります。"],
+ "守":["ひとりで戻すのに時間がかかる",
+      "距離を取って回復する型なので、その時間が取れない時期は、疲れが抜けないまま積み上がっていきます。"]
+};
+
+/* A8の直リンクは置かない。
+   規約上、A8に登録していないサイト／自分で管理していないドメインへの広告掲載は禁止。
+   このページは claude.ai ドメインのため、lit.link（登録済み）経由にする。 */
+var LINK = "https://lit.link/ushinaitakunai_mono";
+var S={A:0,B:0,C:0,D:0}, idx=0, hist=[];
+var el=function(id){return document.getElementById(id)};
+var KEY="kojirase_v2";
+
+function save(){try{localStorage.setItem(KEY,JSON.stringify({S:S,idx:idx,hist:hist}))}catch(e){}}
+function load(){try{var d=localStorage.getItem(KEY);return d?JSON.parse(d):null}catch(e){return null}}
+function clear(){try{localStorage.removeItem(KEY)}catch(e){}}
+
+function dots(){
+  var h="";
+  for(var i=0;i<Q.length;i++){
+    var c="dot"+(i<idx?" on":"")+(i===idx?" now":"");
+    h+='<div class="'+c+'"></div>';
+  }
+  el("dots").innerHTML=h;
+}
+function render(){
+  if(idx>=Q.length){show();return}
+  dots();
+  el("count").textContent=(idx+1)+" / "+Q.length;
+  el("qtext").textContent=Q[idx].t;
+  var box=el("opts"); box.innerHTML="";
+  Q[idx].o.forEach(function(o,i){
+    var b=document.createElement("button");
+    b.className="opt"; b.type="button"; b.textContent=o[0];
+    b.onclick=function(){pick(i)};
+    box.appendChild(b);
+  });
+  el("back").hidden = idx===0;
+  save();
+}
+function pick(i){
+  var w=Q[idx].o[i][1];
+  hist.push(JSON.parse(JSON.stringify(S)));
+  for(var k in w) S[k]+=w[k];
+  idx++; render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+el("back").onclick=function(){ if(!hist.length)return; S=hist.pop(); idx--; render(); };
+function pole(v,hi,lo){return v>=0?hi:lo}
+
+function show(){
+  el("quiz").hidden=true;
+  var a=pole(S.A,"近","待"), b=pole(S.B,"考","感"),
+      c=pole(S.C,"抱","放"), d=pole(S.D,"合","守");
+  var code=a+b+c+d, t=TYPES[code], g=c+d;
+  var loop=LOOP[g]||LOOP["抱合"];
+
+  var dark=false;
+  try{
+    var th=document.documentElement.getAttribute("data-theme");
+    dark = th==="dark" || (th!=="light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  }catch(e){}
+  var root=document.documentElement;
+  root.style.setProperty("--accent", t[5]);
+  root.style.setProperty("--accent-soft", dark?t[7]:t[6]);
+
+  var order=[[Math.abs(S.A),a],[Math.abs(S.B),b],[Math.abs(S.C),c],[Math.abs(S.D),d]]
+            .sort(function(x,y){return y[0]-x[0]});
+  var scenes=[SCENE[order[0][1]][0],SCENE[order[1][1]][0],SCENE[order[2][1]][1]];
+  var steps=[STEP[order[0][1]],STEP[order[1][1]],STEP[order[2][1]]];
+
+  function axrow(lo,hi,val,pick){
+    var pct=Math.max(8,Math.min(92,50+(val/14)*50));
+    return '<div class="axis"><span class="'+(pick===lo?"hit":"")+'">'+lo+'</span>'+
+      '<div class="track"><div class="fill" style="left:'+(pct<50?pct:50)+'%;width:'+Math.abs(pct-50)+'%"></div></div>'+
+      '<span class="'+(pick===hi?"hit":"")+'">'+hi+'</span></div>';
+  }
+
+  var h=''+
+   '<div class="rhead">'+
+     '<div class="rimg"><img src="'+t[2]+'" alt="'+t[4]+'" loading="eager"></div>'+
+     '<p class="animal">'+t[3]+'タイプ</p>'+
+     '<h1 class="rname">'+t[0]+'</h1>'+
+     '<p class="rcatch">'+t[1]+'</p>'+
+   '</div>'+
+   '<div class="axes">'+
+     axrow("待","近",S.A,a)+axrow("感","考",S.B,b)+
+     axrow("放","抱",S.C,c)+axrow("守","合",S.D,d)+
+   '</div>'+
+   '<section><h2>苦しくなりやすい瞬間</h2><ul class="scenes">'+
+     scenes.map(function(s){return "<li>"+s+"</li>"}).join("")+'</ul></section>'+
+   '<section><h2>抜けにくくなる流れ</h2><ul class="loop">'+
+     loop.map(function(s){return "<li>"+s+"</li>"}).join("")+'</ul></section>'+
+   '<section><h2>合う相手 / しんどくなる相手</h2><div class="pair">'+
+     '<div class="pbox good"><h3>合いやすい</h3><p>'+
+       FIT[order[0][1]][0]+"<br>"+FIT[order[1][1]][0]+"<br>"+FIT[order[2][1]][1]+'</p></div>'+
+     '<div class="pbox hard"><h3>消耗しやすい</h3><p>'+
+       HARD[order[0][1]][0]+"<br>"+HARD[order[1][1]][0]+"<br>"+HARD[order[2][1]][1]+'</p></div>'+
+   '</div></section>'+
+   '<section><h2>距離の取り方</h2><ul class="steps">'+
+     steps.map(function(s){return "<li>"+s+"</li>"}).join("")+'</ul></section>'+
+   '<section class="tonight"><h2>今夜できること、ひとつだけ</h2><p>'+
+     (TONIGHT[c]||TONIGHT["抱"])+'</p></section>'+
+   '<section><h2>'+DRAIN[c][0]+'</h2>'+
+     '<p>'+DRAIN[c][1]+'</p>'+
+     '<p>心のほうは、上の「今夜できること」から。'+
+     'そして<b>体のほうは、削られたぶんを戻す作業が別に要ります。</b></p>'+
+   '</section>'+
+   '<section class="cta">'+
+     '<p class="pr">広告（PR）を含みます</p>'+
+     '<h2>疲れが顔に出はじめたら</h2>'+
+     '<p>寝不足や気の張りが続いた時期は、肌の調子が落ちて見えることがあります。'+
+     '心の整理と同時に、そちらも戻していくほうが早いです。<br><br>'+
+     'いきなり大きいものを買う必要はありません。<b>1,000〜2,000円くらいのトライアル</b>から試せるものを、'+
+     'プロフィールにまとめています。</p>'+
+     '<a href="'+LINK+'" target="_blank" rel="noopener">プロフィールを見る</a>'+
+     '<p class="ctanote">話を聴いてもらえる場所も、同じところにあります。</p>'+
+   '</section>'+
+   '<div class="tools">'+
+     '<button class="ghost" id="copy" type="button">結果をコピー</button>'+
+     '<button class="ghost" id="again" type="button">もう一度やる</button>'+
+   '</div>'+
+   '<p class="disc">この診断は、心理検査でも医療的な診断でもありません。'+
+   '性格を断定するものではなく、自分の傾向に名前をつけて扱いやすくするための道具です。'+
+   'しんどさが続くときは、専門の窓口に相談してください。</p>';
+
+  var r=el("result"); r.innerHTML=h; r.hidden=false;
+  window.scrollTo({top:0,behavior:"smooth"});
+  clear();
+
+  el("again").onclick=function(){
+    S={A:0,B:0,C:0,D:0}; idx=0; hist=[];
+    root.style.removeProperty("--accent"); root.style.removeProperty("--accent-soft");
+    r.hidden=true; el("quiz").hidden=false; render(); window.scrollTo({top:0});
+  };
+  el("copy").onclick=function(){
+    var txt="【こじらせ16タイプ診断】\n私は「"+t[3]+"タイプ」\n"+t[0]+"\n"+t[1]+"\n\n苦しくなりやすい瞬間\n・"+scenes.join("\n・");
+    var btn=el("copy");
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){
+        btn.textContent="コピーしました";
+        setTimeout(function(){btn.textContent="結果をコピー"},1800);
+      },function(){btn.textContent="コピーできませんでした"});
+    } else { btn.textContent="コピーできませんでした"; }
+  };
+}
+
+el("go").onclick=function(){ el("intro").hidden=true; el("quiz").hidden=false; render(); };
+
+var saved=load();
+if(saved&&saved.idx>0&&saved.idx<Q.length){
+  S=saved.S; idx=saved.idx; hist=saved.hist||[];
+  el("go").textContent="続きから（"+(idx+1)+"問目）";
+}
+</script>
+
+</body>
+</html>
