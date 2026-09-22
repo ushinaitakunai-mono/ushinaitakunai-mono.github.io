@@ -402,8 +402,10 @@ var DRAIN = {
    ⚠️ A8規約: 登録していないサイトへの広告掲載は禁止。成果が全否認され、提携解除の対象になる。
    このページのドメインを必ずA8にサイト登録してから公開すること。
    登録状況は offers/診断ページ公開_20260922.md を参照。 */
-var A8_BEAUTY  = "https://px.a8.net/svt/ejp?a8mat=4BCGFJ+4BE5O2+1USQ+3HE3PU"; /* オルビスユー ドット 1,800円 EPC690 確定率98.75% */
-var A8_URANAI  = "https://px.a8.net/svt/ejp?a8mat=4B7WD2+C3TBLE+2PEO+C3YG1";  /* ココナラ電話占い 16,000円 EPC65 ※絶対ルール5（740クリックまで判定しない）のため残す */
+/* ⚠️ 2番目のセグメント（4BE6FU / C3TCD6）が「サイトID 002＝こじらせ16タイプ診断」を表す。
+   TikTokサイト(001)用のリンク（4BE5O2 / C3TBLE）をここに貼ると計上先が違うので使わない。 */
+var A8_BEAUTY  = "https://px.a8.net/svt/ejp?a8mat=4BCGFJ+4BE6FU+1USQ+3H18R6"; /* オルビスユー ドット 素材001「初回限定980円」クリック率5%以上・報酬1,800円・EPC707・確定率98.75% */
+var A8_URANAI  = "https://px.a8.net/svt/ejp?a8mat=4B7WD2+C3TCD6+2PEO+C3BAQ";  /* ココナラ電話占い 素材031「3,000円無料クーポン」報酬16,000円・EPC68.88 ※絶対ルール5（740クリックまで判定しない）のため残す */
 var S={A:0,B:0,C:0,D:0}, idx=0, hist=[];
 var el=function(id){return document.getElementById(id)};
 var KEY="kojirase_v2";
@@ -509,9 +511,9 @@ function show(){
      '<p>寝不足や気の張りが続いた時期は、肌の調子が落ちて見えることがあります。'+
      '心の整理と同時に、そちらも戻していくほうが早いです。<br><br>'+
      'いきなり大きいものを買う必要はありません。'+
-     '<b>1,000〜2,000円くらいのトライアル</b>から試せます。</p>'+
-     '<a href="'+A8_BEAUTY+'" target="_blank" rel="noopener nofollow sponsored">トライアルを見てみる</a>'+
-     '<p class="ctanote">オルビスユー ドット（トライアルセット）の公式ページが開きます。</p>'+
+     '<b>7日間ためせるセットが1,000円以下</b>で用意されています。</p>'+
+     '<a href="'+A8_BEAUTY+'" target="_blank" rel="noopener nofollow sponsored">7日間のセットを見てみる</a>'+
+     '<p class="ctanote">オルビス公式サイト（オルビスユー ドット）が開きます。</p>'+
      '<p class="sublead">どうしても、今夜だれかに聴いてほしいときは</p>'+
      '<a class="sub" href="'+A8_URANAI+'" target="_blank" rel="noopener nofollow sponsored">声で話を聴いてもらう</a>'+
    '</section>'+
