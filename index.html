@@ -12,6 +12,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap">
+
+<!-- Googleアナリティクス（2026-09-30 追加）
+     なぜ入れたか: 9/22にプロフィールのリンクを診断に変えたが、
+     「何人が診断ページに来たか」を測る手段が無く、8日間まったく見えなかった。
+     A8で分かるのは「診断ページ→案件」のクリックだけ（8日で16件）。
+     ボトルネックは「プロフィール→診断」のほうなので、そこを測る。
+     プロパティ: こじらせ16タイプ診断 / ストリームID 15872638127 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS6Z5EXE7D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QS6Z5EXE7D');
+</script>
+
 <style>
   :root{
     --bg:#FFF7F0;
@@ -511,6 +526,19 @@ function show(){
   window.scrollTo({top:0,behavior:"smooth"});
   clear();
 
+  /* 結果まで到達した＝10問やり切った。ここが「来たけどやらなかった」との分かれ目 */
+  track("shindan_finish", {type_name: t.n, animal: t.an});
+
+  /* 案件ボタンを押したか。A8のクリック数と突き合わせて、計測漏れがないか確認できる */
+  [].slice.call(r.querySelectorAll(".cta a")).forEach(function(a){
+    a.addEventListener("click", function(){
+      track("offer_click", {
+        offer: a.href.indexOf("4BE6FU") >= 0 ? "orbis" : "uranai",
+        type_name: t.n
+      });
+    });
+  });
+
   el("again").onclick=function(){
     S={A:0,B:0,C:0,D:0}; idx=0; hist=[];
     root.style.removeProperty("--accent"); root.style.removeProperty("--accent-soft");
@@ -537,7 +565,17 @@ function show(){
   };
 }
 
-el("go").onclick=function(){ el("intro").hidden=true; el("quiz").hidden=false; render(); };
+/* 計測（2026-09-30）
+   ページビューだけでは「来たけどやらなかった」と「やったけど押さなかった」を区別できない。
+   離脱がどこで起きているかを知るために、3点だけイベントを送る。 */
+function track(name, params){
+  try { if (typeof gtag === "function") gtag("event", name, params || {}); } catch(e){}
+}
+
+el("go").onclick=function(){
+  track("shindan_start");                    // 診断を始めた
+  el("intro").hidden=true; el("quiz").hidden=false; render();
+};
 
 var saved=load();
 if(saved&&saved.idx>0&&saved.idx<Q.length){
